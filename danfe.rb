@@ -24,16 +24,15 @@ end
 
 company = Company.new(1, "MIRIAM CALAZANS DOS SANTOS 68946392134", "RDSCodes Inc.", "11.945.567/0001-57", "13.393.454-3", "123456789", :phone_number => "991095050")
 
-Qr4r::encode('http://www.sefaz.mt.gov.br/nfce/consultanfce', 'qrcode.png', :border => 1)
+Qr4r::encode('http://www.sefaz.mt.gov.br/nfce/consultanfce?chNFe=51131207212380000177650010000000711000000712', 'qrcode.png')
 
 Prawn::Font::AFM.hide_m17n_warning = true
 Prawn::Document.generate("danfe.pdf") do
-  image "novo_logo_nfce_dark.png", width: 180, at: [180, cursor]
-  move_down 2.3.cm
-  text "#{company.trading_name}"
-  text "CNPJ: #{company.registration_number} IE: #{company.state_registration_number}"
-  text "Rua Tenente Gomes Ribeiro, 182, Cj. 104, Vila Clementino"
-  text "São Paulo - SP"
+  image "novo_logo_nfce_dark.png", width: 100
+  move_down -1.cm
+  str = "#{company.name}\nCNPJ: #{company.registration_number} IE: #{company.state_registration_number}\nRua Tenente Gomes Ribeiro, 182, Cj. 104, Vila Clementino, São Paulo - SP"
+  text_box str, at: [120, cursor]
+  move_down 1.3.cm
   text "________________________________________________________________________________", style: :bold, align: :center
   move_down 3.mm
   str = "DANFE NFCE-e Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica\nNão permite aproveitamento de crédito de ICMS"
@@ -53,9 +52,6 @@ Prawn::Document.generate("danfe.pdf") do
   text_box "Informações dos Tributos Totais Incidentes (Lei Federal 12.741 /2012)", at: [0, cursor]
   text "999.9", align: :right
   text "________________________________________________________________________________", style: :bold, align: :center
-  move_down 3.mm
-  text "Obrigado, volte sempre!!! (Área de mensagem do contribuinte)"
-  text "________________________________________________________________________________", style: :bold, align: :center
   move_down 4.mm
   str = "EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL\nNº:00 Série: 00 Emissão: 00/00/0000 00:00:00\n
   Via consumidor\nConsulte pela chave de acesso em:\nhttp://www.sefaz.mt.gov.br/nfce/consultanfce\nCHAVE DE ACESSO\n00000000000000000000000000000000000000000000"
@@ -67,7 +63,7 @@ Prawn::Document.generate("danfe.pdf") do
   move_down 4.mm
   text "Consulta via leitor de QR Code", align: :center
   move_down 4.mm
-  image "qrcode.png", at: [208, cursor]
-  move_down 5.cm
+  image "qrcode.png", at: [190, cursor]
+  move_down 6.5.cm
   text "Protocolo de autorização: 000000000000000  00/00/0000 00:00:00", align: :center
 end
